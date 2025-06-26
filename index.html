@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jahnavi Dugganapalli | Full-Stack Developer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals & Slate -->
+    <!-- Application Structure Plan: A single-page, top-down narrative portfolio. The structure begins with a strong hero section, followed by a sticky navigation bar for easy access to all key areas. The flow is designed for a recruiter's journey: Summary (who is the candidate), interactive Skills (what can they do), Projects (proof of skills), Experience/Education (their journey), and a visual Skills Chart (quick competency overview). This thematic, non-linear access via nav combined with a linear scroll is more usable than a rigid document, allowing users to explore based on their priorities. -->
+    <!-- Visualization & Content Choices: 
+        - Summary -> Inform -> Text Block -> Static -> Clear intro for context.
+        - Skills List -> Organize -> Interactive Filter Buttons -> JS Filtering -> Allows recruiters to quickly find relevant skills (e.g., just 'frontend'), enhancing usability.
+        - Skills Proficiency -> Compare/Inform -> Horizontal Bar Chart (Chart.js) -> On-scroll animation -> A horizontal bar chart is chosen over a radar chart for better readability of labels on all devices. It provides an immediate visual summary of core strengths.
+        - Projects -> Inform -> Card Layout -> Static -> Cards are scannable and provide a clean way to present project details without overwhelming the user.
+        - Experience/Education -> Change (over time) -> Vertical Timeline -> Static -> A timeline is the most intuitive way to present chronological information, telling a clear story of the candidate's progression.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-image: url('5652006.webp');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-color: #1a202c; /* Dark fallback background color */
+            color: #E2E8F0; /* Light text color for overall body */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+            max-height: 50vh;
+        }
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 300px;
+                max-height: 60vh;
+            }
+        }
+        .nav-link {
+            transition: color 0.3s, border-bottom-color 0.3s;
+            color: #CBD5E1; /* Light grey for navigation links */
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #2dd4bf; /* teal-400 */
+            border-bottom-color: #2dd4bf;
+        }
+        .skill-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .skill-card:hover {
+            transform: translateY(-5px);
+        }
+        .project-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -4px rgba(0, 0, 0, 0.3); /* Darker shadow for dark background */
+        }
+    </style>
+</head>
+<body class="text-gray-200">
+
+    <header id="header" class="bg-gray-900/80 backdrop-blur-lg sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-xl font-bold text-teal-300">Jahnavi Dugganapalli</a>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#about" class="nav-link border-b-2 border-transparent">About</a>
+                <a href="#skills" class="nav-link border-b-2 border-transparent">Skills</a>
+                <a href="#projects" class="nav-link border-b-2 border-transparent">Projects</a>
+                <a href="#journey" class="nav-link border-b-2 border-transparent">Journey</a>
+                <a href="#contact" class="bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 transition-colors">Contact</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden text-gray-200">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden bg-gray-800">
+            <a href="#about" class="block py-2 px-6 text-sm text-gray-200 hover:bg-gray-700">About</a>
+            <a href="#skills" class="block py-2 px-6 text-sm text-gray-200 hover:bg-gray-700">Skills</a>
+            <a href="#projects" class="block py-2 px-6 text-sm text-gray-200 hover:bg-gray-700">Projects</a>
+            <a href="#journey" class="block py-2 px-6 text-sm text-gray-200 hover:bg-gray-700">Journey</a>
+            <a href="#contact" class="block py-2 px-6 text-sm text-gray-200 hover:bg-gray-700">Contact</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6">
+        <section id="about" class="py-20 text-center bg-black/40 rounded-lg p-8 mt-10">
+            <h1 class="text-5xl md:text-6xl font-bold text-white">Dugganapalli Jahnavi</h1>
+            <p class="mt-4 text-xl md:text-2xl text-teal-400 font-medium">Full-Stack Developer</p>
+            <p class="mt-8 max-w-3xl mx-auto text-gray-200">
+                Highly motivated and results-driven Computer Science graduate with a strong foundation in MERN Stack Development. I have a proven ability to design, develop, and deploy efficient, scalable web applications. I'm adept at problem-solving, collaborating in team environments, and rapidly acquiring new technologies to deliver innovative solutions.
+            </p>
+            <div class="mt-8 flex justify-center space-x-6 text-gray-400">
+                <a href="https://linkedin.com/in/jahnavi-dugganapalli-04064427b" target="_blank" class="hover:text-teal-400 transition-colors">
+                    <svg class="w-8 h-8" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                </a>
+                <a href="https://github.com/dugganapallijahnavi" target="_blank" class="hover:text-teal-400 transition-colors">
+                     <svg class="w-8 h-8" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                </a>
+            </div>
+        </section>
+
+        <section id="skills" class="py-20">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-white">Technical Skills</h2>
+                <p class="mt-4 text-gray-300">A showcase of my technical abilities. Use the filters to explore different categories.</p>
+            </div>
+
+            <div id="skill-filters" class="flex flex-wrap justify-center gap-2 mb-8">
+                <button data-filter="all" class="skill-filter-btn active bg-teal-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-teal-700">All</button>
+                <button data-filter="language" class="skill-filter-btn bg-gray-700 text-gray-200 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-600">Languages</button>
+                <button data-filter="frontend" class="skill-filter-btn bg-gray-700 text-gray-200 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-600">Frontend</button>
+                <button data-filter="backend" class="skill-filter-btn bg-gray-700 text-gray-200 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-600">Backend</button>
+                <button data-filter="database" class="skill-filter-btn bg-gray-700 text-gray-200 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-600">Databases</button>
+                <button data-filter="tools" class="skill-filter-btn bg-gray-700 text-gray-200 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-600">Tools</button>
+            </div>
+
+            <div id="skill-list" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            </div>
+            
+            <div class="mt-20">
+                <div class="text-center mb-8">
+                     <h3 class="text-3xl font-bold text-white">Core Competencies</h3>
+                     <p class="mt-2 text-gray-300">A visual representation of my proficiency in key technologies.</p>
+                </div>
+                <div class="chart-container bg-gray-900/70 rounded-lg p-4 shadow-lg border border-gray-700">
+                    <canvas id="skillsChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="py-20 bg-black/60 -mx-6 px-6">
+            <div class="container mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl font-bold text-white">Projects</h2>
+                    <p class="mt-4 text-gray-300">Here are some of the projects I've worked on, showcasing my skills in action.</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="project-card bg-gray-900/70 p-6 rounded-lg shadow-sm border border-gray-700 text-white">
+                        <h3 class="text-xl font-bold text-teal-400">Browser History App</h3>
+                        <p class="text-sm text-teal-500 font-semibold mt-1">React.js</p>
+                        <p class="mt-4 text-gray-300">Engineered a dynamic React application providing a searchable and filterable browser history list. Implemented robust delete functionality and comprehensive empty state handling for an enhanced user experience, ensuring full responsiveness across all devices.</p>
+                    </div>
+                    <div class="project-card bg-gray-900/70 p-6 rounded-lg shadow-sm border border-gray-700 text-white">
+                        <h3 class="text-xl font-bold text-teal-400">Skin Cancer Detection</h3>
+                        <p class="text-sm text-teal-500 font-semibold mt-1">Machine Learning & Python</p>
+                        <p class="mt-4 text-gray-300">Developed a sophisticated machine learning model utilizing a U-Net architecture for precise segmentation and detection of skin cancer from medical images. This project aimed to assist in early diagnosis, showcasing expertise in computer vision and deep learning.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="journey" class="py-20">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-white">My Journey</h2>
+                <p class="mt-4 text-gray-300">A timeline of my professional experience and educational background.</p>
+            </div>
+            <div class="max-w-3xl mx-auto">
+                <div class="relative">
+                    <div class="absolute w-1 bg-teal-500 h-full left-1/2 -translate-x-1/2"></div>
+                    
+                    <div class="relative group">
+                        <div class="flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+                            <div class="flex-1 md:w-5/12"></div>
+                            <div class="z-10 flex items-center justify-center w-8 h-8 rounded-full bg-teal-600 shrink-0 text-white font-bold">E</div>
+                             <div class="flex-1 p-4 rounded-lg bg-gray-900/70 border border-gray-700 shadow-sm md:w-5/12 text-white">
+                                <p class="font-bold text-teal-400">AI-ML Virtual Internship</p>
+                                <p class="text-sm text-gray-400">Eduskills (Virtual)</p>
+                                <p class="text-sm mt-2">Gained hands-on experience in AI/ML through real-world projects, focusing on data analysis, model development, and practical AI applications.</p>
+                             </div>
+                        </div>
+                    </div>
+
+                     <div class="relative group mt-8">
+                        <div class="flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+                             <div class="flex-1 p-4 rounded-lg bg-gray-900/70 border border-gray-700 shadow-sm md:w-5/12 text-white">
+                                <p class="font-bold text-teal-400">B.Tech in Computer Science</p>
+                                <p class="text-sm text-gray-400">Rajeev Gandhi Memorial College of Engg. & Tech. (2021-2025)</p>
+                                <p class="text-sm mt-2">Achieved an aggregate of 84%.</p>
+                            </div>
+                            <div class="z-10 flex items-center justify-center w-8 h-8 rounded-full bg-teal-600 shrink-0 text-white font-bold">B</div>
+                            <div class="flex-1 md:w-5/12"></div>
+                        </div>
+                    </div>
+
+                    <div class="relative group mt-8">
+                        <div class="flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+                            <div class="flex-1 md:w-5/12"></div>
+                            <div class="z-10 flex items-center justify-center w-8 h-8 rounded-full bg-teal-600 shrink-0 text-white font-bold">I</div>
+                             <div class="flex-1 p-4 rounded-lg bg-gray-900/70 border border-gray-700 shadow-sm md:w-5/12 text-white">
+                                <p class="font-bold text-teal-400">Intermediate (MPC)</p>
+                                <p class="text-sm text-gray-400">Narayana Junior College (2019-2021)</p>
+                                <p class="text-sm mt-2">Achieved 92%.</p>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+    </main>
+    
+    <footer id="contact" class="bg-gray-950 text-white py-12 -mx-6 px-6">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl font-bold">Get In Touch</h2>
+            <p class="mt-4 max-w-xl mx-auto text-gray-300">I'm currently seeking new opportunities. My inbox is always open, whether you have a question or just want to say hi, I'll try my best to get back to you!</p>
+            <div class="mt-8">
+                <a href="mailto:dugganapallijahnavi098@gmail.com" class="bg-teal-600 text-white text-lg font-semibold px-8 py-3 rounded-md hover:bg-teal-700 transition-colors">Say Hello</a>
+            </div>
+             <div class="mt-8 text-sm text-gray-400">
+                <p>Dugganapalli Jahnavi | Rayachoti, 516269</p>
+                <p>Phone: 9381805769</p>
+            </div>
+        </div>
+    </footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    const skills = [
+        { name: 'C', category: 'language' },
+        { name: 'Python', category: 'language' },
+        { name: 'Java', category: 'language' },
+        { name: 'JavaScript', category: 'language' },
+        { name: 'HTML5', category: 'frontend' },
+        { name: 'CSS3', category: 'frontend' },
+        { name: 'Bootstrap', category: 'frontend' },
+        { name: 'React.js', category: 'frontend' },
+        { name: 'Node.js', category: 'backend' },
+        { name: 'Express.js', category: 'backend' },
+        { name: 'MongoDB', category: 'database' },
+        { name: 'MySQL', category: 'database' },
+        { name: 'Git & GitHub', category: 'tools' },
+        { name: 'VS Code', category: 'tools' },
+        { name: 'REST APIs', category: 'backend' },
+        { name: 'Responsive Design', category: 'frontend' },
+        { name: 'Deployment', category: 'tools' }
+    ];
+
+    const skillListContainer = document.getElementById('skill-list');
+    const filterButtons = document.querySelectorAll('.skill-filter-btn');
+
+    const renderSkills = (filter = 'all') => {
+        skillListContainer.innerHTML = '';
+        const filteredSkills = filter === 'all' 
+            ? skills 
+            : skills.filter(skill => skill.category === filter);
+
+        filteredSkills.forEach(skill => {
+            const skillElement = document.createElement('div');
+            skillElement.className = 'skill-card bg-gray-800 p-4 rounded-lg shadow-sm text-center border border-gray-700 text-white';
+            skillElement.innerHTML = `<p class="font-medium text-teal-300">${skill.name}</p>`;
+            skillListContainer.appendChild(skillElement);
+        });
+    };
+    
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const filter = button.dataset.filter;
+            
+            filterButtons.forEach(btn => {
+                btn.classList.remove('active', 'bg-teal-600', 'text-white');
+                btn.classList.add('bg-gray-700', 'text-gray-200');
+            });
+            
+            button.classList.add('active', 'bg-teal-600', 'text-white');
+            button.classList.remove('bg-gray-700', 'text-gray-200');
+            
+            renderSkills(filter);
+        });
+    });
+
+    renderSkills();
+    
+    const ctx = document.getElementById('skillsChart').getContext('2d');
+    const skillsChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['JavaScript/ES6', 'React.js', 'Node.js/Express', 'MongoDB', 'Python', 'HTML/CSS'],
+            datasets: [{
+                label: 'Proficiency',
+                data: [90, 85, 80, 75, 80, 95],
+                backgroundColor: 'rgba(45, 212, 191, 0.6)',
+                borderColor: 'rgba(15, 118, 110, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return `${context.dataset.label}: ${context.raw}%`;
+                        }
+                    },
+                    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                    titleColor: '#fff',
+                    bodyColor: '#fff',
+                    borderColor: 'rgba(15, 118, 110, 1)',
+                    borderWidth: 1
+                }
+            },
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    max: 100,
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.2)' /* Lighter grid lines */
+                    },
+                    ticks: {
+                       color: '#E2E8F0', /* Light color for ticks on dark background */
+                       callback: function(value) {
+                           return value + '%';
+                       }
+                    }
+                },
+                y: {
+                     grid: {
+                        display: false
+                    },
+                    ticks: {
+                       color: '#E2E8F0' /* Light color for ticks on dark background */
+                    }
+                }
+            }
+        }
+    });
+
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+    
+    document.querySelectorAll('#mobile-menu a').forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+        });
+    });
+
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.5
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').substring(1) === entry.target.id) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        });
+    }, observerOptions);
+
+    sections.forEach(section => {
+        observer.observe(section);
+    });
+
+});
+</script>
+</body>
+</html>
